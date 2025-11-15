@@ -4,7 +4,7 @@ from sklearn.metrics import f1_score
 
 set_seed(22520465)
 
-def eval(model, val_loader, criterion, device):
+def evaluate(model, val_loader, criterion, device):
     model.eval()
     val_loss = 0.0
     val_correct = 0

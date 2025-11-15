@@ -5,11 +5,12 @@ from utils import load_dataset
 from custom_dataset import CustomDataset
 from utils import transform
 from utils import set_seed
-from eval import eval
+from eval import evaluate
 from sklearn.metrics import f1_score
 import torch
 import torch.nn as nn
 import argparse
+import pandas as pd
 
 set_seed(22520465)
 
@@ -44,7 +45,7 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-5)
 
     # Evaluate model
-    before_train_val_loss, before_train_val_acc, before_train_val_f1, before_train_val_labels_list, before_train_val_preds_list = eval(model, val_loader, criterion, device)
+    before_train_val_loss, before_train_val_acc, before_train_val_f1, before_train_val_labels_list, before_train_val_preds_list = evaluate(model, val_loader, criterion, device)
     print(f"Before Train - Val Loss: {before_train_val_loss:.4f}, Val Acc: {before_train_val_acc:.4f}, Val F1: {before_train_val_f1:.4f}")
 
     # Train model
@@ -93,7 +94,7 @@ if __name__ == "__main__":
         print(f"Epoch {epoch+1}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, Train F1: {train_f1:.4f}")
         
         # Evaluate model
-        val_loss, val_acc, val_f1, val_labels_list, val_preds_list = eval(model, val_loader, criterion, device)
+        val_loss, val_acc, val_f1, val_labels_list, val_preds_list = evaluate(model, val_loader, criterion, device)
         val_losses.append(val_loss)
         val_accs.append(val_acc)
         val_f1s.append(val_f1)
