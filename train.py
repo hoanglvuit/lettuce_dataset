@@ -21,7 +21,7 @@ if __name__ == "__main__":
     parser.add_argument("--num_epochs", type=int, default=2)
     parser.add_argument("--lr", type=float, default=0.001)
     parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu")
-    parser.add_argument("--root_dir", type=str, default="../dataset")
+    parser.add_argument("--root_dir", type=str, default="dataset")
     args = parser.parse_args()
     model_name = args.model_name
     num_epochs = args.num_epochs
@@ -112,6 +112,7 @@ if __name__ == "__main__":
         "val_accs": val_accs,
         "val_f1s": val_f1s,
     })
+    os.makedirs("logs", exist_ok=True)
     log_df.to_csv(f"logs/{model_name}.csv", index=False)
     print(f"Log saved to logs/{model_name}.csv")
     # Save model
