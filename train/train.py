@@ -41,7 +41,7 @@ if __name__ == "__main__":
     print(model.num_params) 
 
     # define criterion and optimizer
-    criterion = nn.BCELoss()
+    criterion = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-5)
 
     # Evaluate model
