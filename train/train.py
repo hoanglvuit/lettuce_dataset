@@ -5,7 +5,7 @@ from utils import load_dataset
 from custom_dataset import CustomDataset
 from utils import transform
 from utils import set_seed
-from train.eval import eval
+from eval import eval
 from sklearn.metrics import f1_score
 import torch
 import torch.nn as nn
