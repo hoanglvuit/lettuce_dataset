@@ -1,5 +1,5 @@
 import torch
-from train.utils import set_seed
+from utils import set_seed
 from sklearn.metrics import f1_score
 
 set_seed(22520465)

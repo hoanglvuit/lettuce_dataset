@@ -1,7 +1,5 @@
-import os
 from PIL import Image
 from torch.utils.data import Dataset
-import random
 
 class CustomDataset(Dataset):
     def __init__(self, image_paths, labels, transform=None):
