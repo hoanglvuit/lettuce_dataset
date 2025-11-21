@@ -22,12 +22,16 @@ if __name__ == "__main__":
     parser.add_argument("--lr", type=float, default=0.0001)
     parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--root_dir", type=str, default="dataset")
+    parser.add_argument("--w0", type=float, default=1.0)
+    parser.add_argument("--w1", type=float, default=1.0)
     args = parser.parse_args()
     model_name = args.model_name
     num_epochs = args.num_epochs
     lr = args.lr
     device = args.device
     root_dir = args.root_dir
+    w0 = args.w0
+    w1 = args.w1
 
     # Load dataset
     train_paths, train_labels, val_paths, val_labels = load_dataset(root_dir=root_dir, train_ratio=0.8) 
@@ -37,11 +41,12 @@ if __name__ == "__main__":
     val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
 
     # Load model
-    model = Model2Class(model_name=model_name)
+    model = Model2Class(model_name=model_name).to(device)
     print(model.num_params) 
 
     # define criterion and optimizer
-    criterion = nn.BCEWithLogitsLoss()
+    class_weights = torch.tensor([w1/w0]).to(device)
+    criterion = nn.BCEWithLogitsLoss(pos_weight=class_weights)
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-5)
 
     # Evaluate model
